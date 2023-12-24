@@ -1,0 +1,112 @@
+html {
+    overflow: hidden;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #5B82FF;
+}
+
+.random-word-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    height: 512px;
+    width: 384px;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 1.6rem;
+    text-align: center;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+}
+
+.random-word-container p {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.random-word-container button {
+    width: 100%;
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 10px;
+    background-color: #60DB76;
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.random-word-container button:hover {
+    background-color: #52C27E;
+}
+
+#english-word {
+    font: 700 1.6rem 'Arial', sans-serif;
+    margin: 0;
+}
+
+#btn-didnt-know {
+    background-color: #ECECEC;
+    color: #111;
+}
+
+#btn-didnt-know:hover {
+    background-color: #E2E2E2;
+}
+
+.random-word-container::before {
+    content: "";
+    position: absolute;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    z-index: -1;
+}
+
+.random-word-container::before {
+    background-color: #f9f9f980;
+    top: 16px;
+    left: 16px;
+    right: -8px;
+    bottom: -8px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.word-audio-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.bi-volume-up {
+    cursor: pointer;
+    font-size: 32px;
+    color: #666;
+    margin-left: 8px;
+}
+
+.bi-info-circle {
+    cursor: pointer;
+    font-size: 24px;
+    color: #666;
+}
+
+.modal-body {
+    max-height: 400px; /* ajuste este valor conforme necessário */
+    overflow-y: auto;
+}
+
+
+.custom-spinner {
+    color: red !important;
+}
