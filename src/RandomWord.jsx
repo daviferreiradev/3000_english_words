@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Modal } from 'react-bootstrap';
+import CategoryFilter from './CategoryFilter';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import words from './words.json';
 import './RandomWord.css';
 
+
 function RandomWord() {
-    const [currentWord, setCurrentWord] = useState(words[0]);
+    const [currentWord, setCurrentWord] = useState("");
+    const [currentWordsSet, setCurrentWordsSet] = useState([]); // Novo estado para armazenar o conjunto atual de palavras
     const [translation, setTranslation] = useState('');
     const [wordDetails, setWordDetails] = useState(null);
     const [showTranslation, setShowTranslation] = useState(false);
@@ -56,16 +58,20 @@ function RandomWord() {
     };
 
     const showRandomWord = () => {
-        const randomWord = words[Math.floor(Math.random() * words.length)];
-        setCurrentWord(randomWord);
-        setShowTranslation(false);
-        setTranslation('');
-        getWordDetails(randomWord);
+        if (currentWordsSet && currentWordsSet.length > 0) {
+            const randomWord = currentWordsSet[Math.floor(Math.random() * currentWordsSet.length)];
+            setCurrentWord(randomWord);
+            setShowTranslation(false);
+            setTranslation('');
+            getWordDetails(randomWord);
+        }
     };
 
     const handleShowTranslation = () => {
-        translateWord(currentWord);
-        setShowTranslation(true);
+        if (currentWord) {
+            translateWord(currentWord);
+            setShowTranslation(true);
+        }
     };
 
     const playAudio = (audioUrl) => {
@@ -91,9 +97,21 @@ function RandomWord() {
         return examples;
     };
 
+    const handleLevelChange = (newWords) => {
+        setCurrentWordsSet(newWords); // Atualiza o conjunto atual de palavras
+        if (newWords && newWords.length > 0) {
+            const randomWord = newWords[Math.floor(Math.random() * newWords.length)];
+            setCurrentWord(randomWord);
+            setShowTranslation(false);
+            setTranslation('');
+            getWordDetails(randomWord);
+        }
+    };  
+
     return (
         <div className="random-word-container">
-            <div className='w-100 d-flex justify-content-end'>
+            <div className='w-100 d-flex justify-content-between align-items-center'>
+                <CategoryFilter onLevelChange={handleLevelChange} />
                 <i className="bi bi-info-circle" onClick={toggleModal}></i>
             </div>
 
@@ -128,6 +146,7 @@ function RandomWord() {
                     <button id='btn-didnt-know' onClick={showRandomWord}>I didn't know</button>
                 </div>
             )}
+
 
             {/* Modal do Bootstrap para exibir as informações */}
             <Modal show={showModal} onHide={toggleModal}>
