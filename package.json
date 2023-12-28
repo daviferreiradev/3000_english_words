@@ -24,5 +24,17 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "vite": "^5.0.8"
-  }
+  },
+  "description": "This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.",
+  "main": "vite.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daviferreiradev/3000_english_words.git"
+  },
+  "author": "Davi José Ferreira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daviferreiradev/3000_english_words/issues"
+  },
+  "homepage": "https://github.com/daviferreiradev/3000_english_words#readme"
 }

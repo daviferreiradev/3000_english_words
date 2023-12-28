@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import { Modal } from 'react-bootstrap';
 import CategoryFilter from './CategoryFilter';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import WordDetailsModal from './WordDetailsModal';
 import './RandomWord.css';
-
 
 function RandomWord() {
     const [currentWord, setCurrentWord] = useState("");
-    const [currentWordsSet, setCurrentWordsSet] = useState([]); // Novo estado para armazenar o conjunto atual de palavras
+    const [currentWordsSet, setCurrentWordsSet] = useState([]);
     const [translation, setTranslation] = useState('');
     const [wordDetails, setWordDetails] = useState(null);
     const [showTranslation, setShowTranslation] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
+      
     const translateWord = async (word) => {
         setIsLoading(true);
         try {
@@ -42,7 +40,6 @@ function RandomWord() {
         }
     };
     
-
     const getWordDetails = async (word) => {
         try {
             const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
@@ -98,7 +95,7 @@ function RandomWord() {
     };
 
     const handleLevelChange = (newWords) => {
-        setCurrentWordsSet(newWords); // Atualiza o conjunto atual de palavras
+        setCurrentWordsSet(newWords); 
         if (newWords && newWords.length > 0) {
             const randomWord = newWords[Math.floor(Math.random() * newWords.length)];
             setCurrentWord(randomWord);
@@ -106,7 +103,7 @@ function RandomWord() {
             setTranslation('');
             getWordDetails(randomWord);
         }
-    };  
+    };
 
     return (
         <div className="random-word-container">
@@ -149,37 +146,13 @@ function RandomWord() {
 
 
             {/* Modal do Bootstrap para exibir as informações */}
-            <Modal show={showModal} onHide={toggleModal}>
-                <Modal.Header closeButton>
-                    <Modal.Title><p id='english-word' className='text-capitalize'>{currentWord}</p></Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    {wordDetails ? (
-                        <div>
-                            <p><strong>Pronunciation:</strong> {wordDetails.phonetics[0]?.text || "Not available"}</p>
-                            {wordDetails.meanings.map((meaning, index) => (
-                                <div key={index}>
-                                    <p><strong>Class:</strong> {meaning.partOfSpeech || "Not available"}</p>
-                                    {meaning.definitions.map((def, defIndex) => (
-                                        <p key={defIndex}><strong>Definition {defIndex + 1}:</strong> {def.definition}</p>
-                                    ))}
-                                </div>
-                            ))}
-
-                            {/* Exibir exemplos */}
-                            <div>
-                                <strong>Examples:</strong>
-                                {getExamples().map((example, index) => (
-                                    <p key={index}>{example}</p>
-                                ))}
-                            </div>
-                        </div>
-                    ) : (
-                        <p>No details available.</p>
-                    )}
-                    
-                </Modal.Body>
-            </Modal>
+            <WordDetailsModal
+                showModal={showModal}
+                toggleModal={toggleModal}
+                currentWord={currentWord}
+                wordDetails={wordDetails}
+                getExamples={getExamples}
+            />
         </div>
     );
 }
